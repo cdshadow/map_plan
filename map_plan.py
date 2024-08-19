@@ -1,4 +1,4 @@
-import streamlit as st
+import streamli as st
 import pandas as pd
 import geopandas as gpd
 import folium
