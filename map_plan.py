@@ -1,4 +1,4 @@
-import streamli as st
+import streamlit as st
 import pandas as pd
 import geopandas as gpd
 import folium
@@ -11,7 +11,7 @@ file_path = 'data.csv'
 st.set_page_config(layout="wide")
 
 # 데이터 파일 경로
-shp_file_path_1f = 'https://raw.githubusercontent.com/cdshadow/map_plan/main/1f_2.shp'
+shp_file_path_1f = 'https://raw.githubusercontent.com/cdshadow/map_plan/main/1f_2.sh'
 shp_file_path_3f = 'https://raw.githubusercontent.com/cdshadow/map_plan/main/3f_2.shp'
 
 # Folium 지도 생성 함수
