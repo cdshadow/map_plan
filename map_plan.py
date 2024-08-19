@@ -11,8 +11,8 @@ file_path = 'data.csv'
 st.set_page_config(layout="wide")
 
 # 데이터 파일 경로
-shp_file_path_1f = 'https://raw.githubusercontent.com/cdshadow/dj_move/main/1f_2.shp'
-shp_file_path_3f = 'https://raw.githubusercontent.com/cdshadow/dj_move/main/3f_2.shp'
+shp_file_path_1f = 'https://raw.githubusercontent.com/cdshadow/map_plan/main/1f_2.shp'
+shp_file_path_3f = 'https://raw.githubusercontent.com/cdshadow/map_plan/main/3f_2.shp'
 
 # Folium 지도 생성 함수
 def create_map():
