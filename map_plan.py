@@ -60,7 +60,7 @@ def create_map():
     return map_obj
 
 # Streamlit 레이아웃 설정
-st.title('대전광역시 지리 정보 시각화')
+#st.title('대전광역시 지리 정보 시각화')
 
 # 지도 생성 및 출력
 st.header('대전광역시 지도')
