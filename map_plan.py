@@ -4,8 +4,11 @@ import folium
 from streamlit_folium import st_folium
 import requests
 
-# 브이월드 API 키 설정 (자신의 API 키를 입력하세요)
+# 브이월드 API 키 설정
 apikey = 'DB7E4D5F-219B-3F5A-8E2F-EC32EED95A2C'
+
+# GitHub raw content URL의 data.csv 파일 경로
+file_path = 'data.csv'
 
 # Streamlit 설정
 st.set_page_config(layout="wide")
@@ -31,14 +34,21 @@ def geocode_address_vworld(address):
     }
     
     response = requests.get(apiurl, params=params)
+    st.write("API Response Status Code:", response.status_code)
+    st.write("API Response Content:", response.text)  # JSON으로 파싱하기 전에 응답 내용을 출력
+    
     if response.status_code == 200:
-        data = response.json()
-        if data['response']['status'] == 'OK':
-            x = data['response']['result']['point']['x']
-            y = data['response']['result']['point']['y']
-            return float(y), float(x)  # 브이월드는 (x, y) 순서로 좌표를 반환
-        else:
-            st.error("주소를 찾을 수 없습니다.")
+        try:
+            data = response.json()
+            if data['response']['status'] == 'OK':
+                x = data['response']['result']['point']['x']
+                y = data['response']['result']['point']['y']
+                return float(y), float(x)  # 브이월드는 (x, y) 순서로 좌표를 반환
+            else:
+                st.error("주소를 찾을 수 없습니다.")
+                return None, None
+        except requests.exceptions.JSONDecodeError:
+            st.error("JSON 파싱에 실패했습니다.")
             return None, None
     else:
         st.error("API 요청이 실패했습니다.")
