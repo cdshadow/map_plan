@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 import geopandas as gpd
 import folium
 from streamlit_folium import st_folium
@@ -19,17 +20,7 @@ def create_map():
     map_obj = folium.Map(
         location=[36.3504, 127.3845],
         zoom_start=12,  # 줌 레벨 조정
-        tiles=None  # 기본 타일을 사용하지 않도록 설정
     )
-
-    # 카카오맵 타일 추가
-    folium.TileLayer(
-        tiles='https://map{0}.daumcdn.net/map_2d_hd/2306u/11/16/{z}/{x}/{y}.png',
-        attr='ⓒ Kakao',
-        name='KakaoMap',
-        max_zoom=19,
-        subdomains='1234',
-    ).add_to(map_obj)
 
     # 1f.shp 파일 불러오기
     gdf_1f = gpd.read_file(shp_file_path_1f)
@@ -75,4 +66,3 @@ st.title('대전광역시 지리 정보 시각화')
 st.header('대전광역시 지도')
 map_display = create_map()
 st_folium(map_display, width=1200, height=700)
-
