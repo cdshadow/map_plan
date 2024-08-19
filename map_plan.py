@@ -19,7 +19,7 @@ shp_file_path_3f = 'https://raw.githubusercontent.com/cdshadow/map_plan/main/3f_
 geolocator = Nominatim(user_agent="geoapiExercises")
 
 # 주소를 입력받는 입력창 생성
-address = st.text_input("주소를 입력하세요:", "대전 유성구 전민로38번길 7")
+address = st.text_input("주소를 입력하세요:", "대전광역시 유성구 전민로 37")
 
 # 주소를 지오코딩하여 위도와 경도를 얻는 함수
 def geocode_address(address):
