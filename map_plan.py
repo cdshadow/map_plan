@@ -3,6 +3,7 @@ import pandas as pd
 import geopandas as gpd
 import folium
 from streamlit_folium import st_folium
+from geopy.geocoders import Nominatim
 
 # GitHub raw content URL의 data.csv 파일 경로
 file_path = 'data.csv'
@@ -14,12 +15,30 @@ st.set_page_config(layout="wide")
 shp_file_path_1f = 'https://raw.githubusercontent.com/cdshadow/map_plan/main/1f_2.shp'
 shp_file_path_3f = 'https://raw.githubusercontent.com/cdshadow/map_plan/main/3f_2.shp'
 
+# 지오코딩을 위한 Nominatim 초기화
+geolocator = Nominatim(user_agent="geoapiExercises")
+
+# 주소를 입력받는 입력창 생성
+address = st.text_input("주소를 입력하세요:", "대전 유성구 전민로38번길 7")
+
+# 주소를 지오코딩하여 위도와 경도를 얻는 함수
+def geocode_address(address):
+    location = geolocator.geocode(address)
+    if location:
+        return location.latitude, location.longitude
+    else:
+        st.error("주소를 찾을 수 없습니다.")
+        return None, None
+
+# 입력된 주소를 지오코딩하여 지도 중심 좌표 설정
+latitude, longitude = geocode_address(address)
+
 # Folium 지도 생성 함수
-def create_map():
-    # Folium 지도 설정 (대전광역시 중심)
+def create_map(lat, lon):
+    # Folium 지도 설정 (입력된 주소를 중심으로)
     map_obj = folium.Map(
-        location=[36.3504, 127.3845],
-        zoom_start=12,  # 줌 레벨 조정
+        location=[lat, lon],
+        zoom_start=16,  # 줌 레벨 조정
     )
 
     # 1f.shp 파일 불러오기
@@ -59,10 +78,8 @@ def create_map():
 
     return map_obj
 
-# Streamlit 레이아웃 설정
-st.title('대전광역시 지리 정보 시각화')
-
-# 지도 생성 및 출력
-st.header('대전광역시 지도')
-map_display = create_map()
-st_folium(map_display, width=1200, height=700)
+# 주소가 유효한 경우에만 지도를 생성하고 표시
+if latitude and longitude:
+    st.header('대전광역시 지도')
+    map_display = create_map(latitude, longitude)
+    st_folium(map_display, width=1200, height=700)
