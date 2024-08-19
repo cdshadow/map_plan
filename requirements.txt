@@ -7,6 +7,5 @@ plotly
 geopandas
 folium
 requests
-json
 shapely
 streamlit-folium
