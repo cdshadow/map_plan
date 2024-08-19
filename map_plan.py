@@ -1,12 +1,11 @@
 import streamlit as st
-import pandas as pd
 import geopandas as gpd
 import folium
 from streamlit_folium import st_folium
-from geopy.geocoders import Nominatim
+import requests
 
-# GitHub raw content URL의 data.csv 파일 경로
-file_path = 'data.csv'
+# 브이월드 API 키 설정 (자신의 API 키를 입력하세요)
+apikey = 'DB7E4D5F-219B-3F5A-8E2F-EC32EED95A2C'
 
 # Streamlit 설정
 st.set_page_config(layout="wide")
@@ -15,23 +14,38 @@ st.set_page_config(layout="wide")
 shp_file_path_1f = 'https://raw.githubusercontent.com/cdshadow/map_plan/main/1f_2.shp'
 shp_file_path_3f = 'https://raw.githubusercontent.com/cdshadow/map_plan/main/3f_2.shp'
 
-# 지오코딩을 위한 Nominatim 초기화
-geolocator = Nominatim(user_agent="geoapiExercises")
-
 # 주소를 입력받는 입력창 생성
 address = st.text_input("주소를 입력하세요:", "대전광역시 유성구 전민로 37")
 
-# 주소를 지오코딩하여 위도와 경도를 얻는 함수
-def geocode_address(address):
-    location = geolocator.geocode(address)
-    if location:
-        return location.latitude, location.longitude
+# 브이월드 API를 통해 주소를 지오코딩하는 함수
+def geocode_address_vworld(address):
+    apiurl = 'https://api.vworld.kr/req/address?'
+    params = {
+        'service': 'address',
+        'request': 'getcoord',
+        'crs': 'epsg:4326',
+        'address': address,
+        'format': 'json',
+        'type': 'PARCEL',  # 'PARCEL'은 도로명 주소, 'ROAD'는 지번 주소
+        'key': apikey
+    }
+    
+    response = requests.get(apiurl, params=params)
+    if response.status_code == 200:
+        data = response.json()
+        if data['response']['status'] == 'OK':
+            x = data['response']['result']['point']['x']
+            y = data['response']['result']['point']['y']
+            return float(y), float(x)  # 브이월드는 (x, y) 순서로 좌표를 반환
+        else:
+            st.error("주소를 찾을 수 없습니다.")
+            return None, None
     else:
-        st.error("주소를 찾을 수 없습니다.")
+        st.error("API 요청이 실패했습니다.")
         return None, None
 
 # 입력된 주소를 지오코딩하여 지도 중심 좌표 설정
-latitude, longitude = geocode_address(address)
+latitude, longitude = geocode_address_vworld(address)
 
 # Folium 지도 생성 함수
 def create_map(lat, lon):
@@ -73,6 +87,12 @@ def create_map(lat, lon):
         }
     ).add_to(map_obj)
 
+    # 입력된 주소에 마커 추가
+    folium.Marker([lat, lon],
+                  popup=folium.Popup(f'<b>{address}</b>', max_width=200),
+                  icon=folium.Icon(color='red', icon='bookmark')
+                 ).add_to(map_obj)
+    
     # 레이어 컨트롤 추가
     folium.LayerControl().add_to(map_obj)
 
