@@ -9,7 +9,6 @@ file_path = 'data.csv'
 
 # Streamlit 설정
 st.set_page_config(layout="wide")  # 레이아웃을 wide로 설정
-#st.set_page_config(layout="centered")
 
 # 데이터 파일 경로
 shp_file_path_1f = 'https://raw.githubusercontent.com/cdshadow/map_plan/main/1f_2.shp'
@@ -61,11 +60,20 @@ def create_map():
     return map_obj
 
 # Streamlit 레이아웃 설정
-#st.title('대전광역시 지리 정보 시각화')
+map_display = create_map()
+
+# CSS 스타일을 사용하여 뷰포트 크기에 따라 자동으로 지도 크기 조정
+st.markdown(
+    """
+    <style>
+    .folium-map {
+        height: 80vh !important;  /* 뷰포트 높이의 80%로 설정 */
+        width: 100% !important;  /* 가로를 100%로 설정 */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 # 지도 생성 및 출력
-#st.header('대전광역시 지도')
-map_display = create_map()
-#st_folium(map_display, width=1200, height=700)
-st_folium(map_display, width=400, height=400)
-
+st_folium(map_display, width=None, height=None)
