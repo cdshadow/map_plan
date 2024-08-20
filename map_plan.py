@@ -18,7 +18,7 @@ shp_file_path_3f = 'https://raw.githubusercontent.com/cdshadow/map_plan/main/3f_
 def create_map():
     # Folium 지도 설정 (대전광역시 중심)
     map_obj = folium.Map(
-        location=[36.3504, 130.3845],
+        location=[36.3504, 127.3845],
         zoom_start=12,  # 줌 레벨 조정
     )
 
