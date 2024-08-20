@@ -64,5 +64,22 @@ def create_map():
 
 # 지도 생성 및 출력
 #st.header('대전광역시 지도')
+
+# Streamlit 레이아웃 설정
 map_display = create_map()
-st_folium(map_display, width=1200, height=700)
+
+# CSS 스타일을 사용하여 뷰포트 크기에 따라 자동으로 지도 크기 조정
+st.markdown(
+    """
+    <style>
+    .folium-map {
+        height: 80vh !important;  /* 뷰포트 높이의 80%로 설정 */
+        width: 100% !important;  /* 가로를 100%로 설정 */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# 지도 생성 및 출력
+st_folium(map_display, width=None, height=None)
