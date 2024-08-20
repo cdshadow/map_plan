@@ -9,6 +9,8 @@ file_path = 'data.csv'
 
 # Streamlit 설정
 #st.set_page_config(layout="wide")
+#st.set_page_config(layout="centered")
+
 
 # 데이터 파일 경로
 shp_file_path_1f = 'https://raw.githubusercontent.com/cdshadow/map_plan/main/1f_2.shp'
