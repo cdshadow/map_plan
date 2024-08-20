@@ -8,7 +8,7 @@ from streamlit_folium import st_folium
 file_path = 'data.csv'
 
 # Streamlit 설정
-st.set_page_config(layout="wide")  # 레이아웃을 wide로 설정
+#st.set_page_config(layout="wide")
 
 # 데이터 파일 경로
 shp_file_path_1f = 'https://raw.githubusercontent.com/cdshadow/map_plan/main/1f_2.shp'
@@ -18,7 +18,7 @@ shp_file_path_3f = 'https://raw.githubusercontent.com/cdshadow/map_plan/main/3f_
 def create_map():
     # Folium 지도 설정 (대전광역시 중심)
     map_obj = folium.Map(
-        location=[36.3504, 127.3845],
+        location=[36.3504, 130.3845],
         zoom_start=12,  # 줌 레벨 조정
     )
 
@@ -60,6 +60,12 @@ def create_map():
     return map_obj
 
 # Streamlit 레이아웃 설정
+#st.title('대전광역시 지리 정보 시각화')
+
+# 지도 생성 및 출력
+#st.header('대전광역시 지도')
+
+# Streamlit 레이아웃 설정
 map_display = create_map()
 
 # CSS 스타일을 사용하여 뷰포트 크기에 따라 자동으로 지도 크기 조정
@@ -77,3 +83,14 @@ st.markdown(
 
 # 지도 생성 및 출력
 st_folium(map_display, width=None, height=None)
+
+
+
+
+
+
+
+
+
+
+
