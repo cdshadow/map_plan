@@ -8,8 +8,8 @@ from streamlit_folium import st_folium
 file_path = 'data.csv'
 
 # Streamlit 설정
-#st.set_page_config(layout="wide")  # 레이아웃을 wide로 설정
-st.set_page_config(layout="centered")
+st.set_page_config(layout="wide")  # 레이아웃을 wide로 설정
+#st.set_page_config(layout="centered")
 
 # 데이터 파일 경로
 shp_file_path_1f = 'https://raw.githubusercontent.com/cdshadow/map_plan/main/1f_2.shp'
@@ -67,5 +67,5 @@ def create_map():
 #st.header('대전광역시 지도')
 map_display = create_map()
 #st_folium(map_display, width=1200, height=700)
-st_folium(map_display, width=400, height=600)
+st_folium(map_display, width=400, height=400)
 
