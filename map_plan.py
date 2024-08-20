@@ -65,4 +65,4 @@ def create_map():
 # 지도 생성 및 출력
 #st.header('대전광역시 지도')
 map_display = create_map()
-st_folium(map_display, width=330, height=330)
+st_folium(map_display, width=1200, height=700)
