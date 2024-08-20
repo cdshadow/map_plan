@@ -55,7 +55,7 @@ def create_map():
     ).add_to(map_obj)
 
     # 레이어 컨트롤 추가
-    folium.LayerControl().add_to(map_obj)
+    folium.LayerControl(position='topleft').add_to(map_obj)
 
     return map_obj
 
